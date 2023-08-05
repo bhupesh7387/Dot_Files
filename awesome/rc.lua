@@ -577,3 +577,14 @@ if awful.util.spawn("cat /sys/class/power_supply/BAT1/capacity")<30 then
 elseif awful.util.spawn("cat /sys/class/power_supply/BAT1/capacity")>80 then
     naughty.notify("Battery more than 80%. Stop Charging.", "Battery High")
 end
+
+--Center Modal Windows
+client.connect_signal('manage', function(c)
+    -- Center dialogs over parent
+    if c.transient_for then
+        awful.placement.centered(c, {
+            parent = c.transient_for
+        })
+        awful.placement.no_offscreen(c)
+    end
+end)
